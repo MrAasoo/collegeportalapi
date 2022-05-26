@@ -17,12 +17,11 @@ $std_password = $_GET["std_password"];
 $sql = "select * from student_account where std_id = '$std_id'";
 $result = mysqli_query($db_con, $sql);
 
-if(!mysqli_num_rows($result) > 0){
+if(!mysqli_num_rows($result) == 1){
 	$error = true;	
 	$error_code = STUDENT_ID_NOT_FOUND;
 	echo json_encode(array("error" => $error, "code" => $error_code));
-} 
-else {
+} else {
 	
 	$sql_validate = "select * from student_account where std_id = '$std_id' and std_password = '$std_password'";
 	$result = mysqli_query($db_con, $sql_validate);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2022 at 10:23 AM
+-- Generation Time: May 25, 2022 at 06:15 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -34,6 +34,7 @@ CREATE TABLE `assignment_info` (
   `assi_date` varchar(45) NOT NULL,
   `assi_details` varchar(200) NOT NULL COMMENT 'MAX 200 char',
   `branch_id` int(10) NOT NULL,
+  `subject_code` varchar(10) NOT NULL,
   `faculty_id` int(10) NOT NULL,
   `assi_due_date` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -42,9 +43,9 @@ CREATE TABLE `assignment_info` (
 -- Dumping data for table `assignment_info`
 --
 
-INSERT INTO `assignment_info` (`assi_id`, `assi_title`, `assi_date`, `assi_details`, `branch_id`, `faculty_id`, `assi_due_date`) VALUES
-(1, 'Assignment 1', '26-12-2021', 'Assignment details should be written here.', 0, 4001, '10-01-2022'),
-(2, 'Assignment on ABC', '10-1-2022', 'Here show assignment details for the following.', 0, 4004, '16-01-2022');
+INSERT INTO `assignment_info` (`assi_id`, `assi_title`, `assi_date`, `assi_details`, `branch_id`, `subject_code`, `faculty_id`, `assi_due_date`) VALUES
+(1, 'Assignment 1', '26-12-2021', 'Assignment details should be written here.', 2, 'MCA - 401', 4001, '10-01-2022'),
+(2, 'Assignment on ABC', '10-1-2022', 'Here show assignment details for the following.', 2, 'MCA - 402', 4004, '16-01-2022');
 
 -- --------------------------------------------------------
 
@@ -89,7 +90,7 @@ CREATE TABLE `college_contact` (
 INSERT INTO `college_contact` (`contact_sr_no`, `contact_designation`, `contact_name`, `contact_number`, `contact_link`, `contact_email`) VALUES
 (1, 'Application Developer', 'Himanshu srivastava', '7081654255', '', 'aasoogames@gmail.com'),
 (2, 'Application Developer', 'Komal Chaudhary', '', '', 'komal@stportal.com'),
-(3, '', 'App Domain Name', '', 'https://collageportal.000webhostapp.com/', '');
+(3, '', 'App Domain Name', '', 'https://studentcollegeportal.000webhostapp.com/', '');
 
 -- --------------------------------------------------------
 
@@ -119,7 +120,7 @@ INSERT INTO `college_events` (`n_id`, `n_date`, `n_title`, `n_subtitle`, `n_deta
 (4, '22/12/2021', 'Sports Events', 'College events will be starting from 03-01-2022.', 'College is orgnising a Junior level sports competetion. Intrested students have to fill a from to participate. Form shold be submited by 30-12-2021', 'collegesports.jpg', 2, 1),
 (5, '06/03/2022', 'External Exams', 'External date will be starting from 16/03/2022', 'University announced examination dates. Exams will be startng from 16-03-2022 for all Technical and Non-Technical cources.', 'imgexams.jpg', 1, 1),
 (6, '01/04/2022', 'Final Exams Dates', 'Fianl year exams date will be announced soon.', 'Even sem exams of final year examination date will be announced soon. As per university recently an gudeline has been issued for the Technical and Non-Technical Students final Exams', 'guide.jpg', 0, 1),
-(7, '14/03/2021', 'Maths, Physics not mandatory', 'Maths, Physics not mandatory for engineering test: Key takeaways from AICTE\'s new guidelines', 'The All Indian Council of Technical Education (AICTE) has tweaked the eligibility criteria for undergraduate engineering programmes, permitting higher education institutions to admit students who have not studied Physics and Mathematics in school to streams such as textile engineering and biotechnology.', 'aictef1200.jpg', 0, 0);
+(7, '14/03/2021', 'Maths, Physics not mandatory', 'Maths, Physics not mandatory for engineering test: Key takeaways from AICTEs new guidelines', 'The All Indian Council of Technical Education (AICTE) has tweaked the eligibility criteria for undergraduate engineering programmes, permitting higher education institutions to admit students who have not studied Physics and Mathematics in school to streams such as textile engineering and biotechnology.', 'aictef1200.jpg', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -128,12 +129,27 @@ INSERT INTO `college_events` (`n_id`, `n_date`, `n_title`, `n_subtitle`, `n_deta
 --
 
 CREATE TABLE `college_gallery` (
-  `sr_no` int(11) NOT NULL,
+  `sr_no` int(10) NOT NULL,
   `media_type` int(1) NOT NULL COMMENT '1 - images 2 - videos',
-  `media_discription` varchar(200) NOT NULL,
+  `media_description` varchar(1000) NOT NULL,
   `media_added` varchar(10) NOT NULL,
-  `media_path` varchar(40) NOT NULL
+  `media_path` varchar(40) NOT NULL,
+  `media_path_video` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `college_gallery`
+--
+
+INSERT INTO `college_gallery` (`sr_no`, `media_type`, `media_description`, `media_added`, `media_path`, `media_path_video`) VALUES
+(1, 1, 'Welcome to SCRIET.\r\nSCRIET Home Page - Facebook\r\nImages may be subject to copyright', '18-05-2022', 'stportal.jpg', ''),
+(2, 1, 'Sir Chhotu Ram Institute of Engineering and Technology (SCRIET)\r\nMeerut,  Uttar Pradesh\\nEstablished: 2002,\r\nApproved by AICTE, \r\nCh. Charan Singh University Campus, Meerut', '18-05-2022', 'stportal1.jpg', ''),
+(3, 1, 'Sir Chhotu Ram Institute of Engineering and Technology  (SCRIET) was established in 2002 with the aim of providing quality education in the field of Engineering and Technology. \r\nThe Institute is a constituent part of the Ch. Charan Singh University, Meerut.', '19-05-2022', 'stportal2.jpg', ''),
+(4, 1, 'SCRIET is considered one of the Western U.P. leaders in Engineering which presents a unique opportunity for students to get a cutting edge over its counterparts.\r\nAlso provides an opportunity to experience diverse environments through Internships and Research Projects.\r\nThe curriculum is designed for focusing more on industrial research and readiness.\r\nSCRIET is considered one of the Western U.P. leaders in Engineering which presents a unique opportunity for students to get a cutting edge over its counterparts.\r\nAlso provides an opportunity to experience diverse environments through Internships and Research Projects.\r\nThe curriculum is designed for focusing more on industrial research and readiness.', '18-05-2022', 'stportal3.jpg', ''),
+(5, 2, 'Dictionary pages turnning in wind', '19-05-2022', 'dictionary21941.jpg', 'Dictionary21941.mp4'),
+(6, 2, 'Student laptop notebook - Free Commercial', '20-05-2022', 'laptop1058.jpg', 'laptop1058.mp4'),
+(7, 2, 'Board Chalk - Study diagram', '20-05-2022', 'Board18437.jpg', 'Board18437.mp4'),
+(8, 2, 'CGI Animated Short Film: \"Thatching Eggs\" by Max Marlow | CGMeetup', '20-05-2022', 'videoplayback.jpg', 'videoplayback.mp4');
 
 -- --------------------------------------------------------
 
@@ -217,8 +233,8 @@ INSERT INTO `faculty_info` (`faculty_id`, `faculty_name`, `department_id`, `facu
 
 CREATE TABLE `student_account` (
   `std_id` int(10) NOT NULL,
-  `std_password` varchar(100) NOT NULL,
   `std_name` varchar(45) NOT NULL,
+  `std_password` varchar(100) NOT NULL,
   `std_image` varchar(45) NOT NULL,
   `std_sem` int(2) NOT NULL,
   `std_accadmic` varchar(10) NOT NULL,
@@ -231,15 +247,15 @@ CREATE TABLE `student_account` (
 -- Dumping data for table `student_account`
 --
 
-INSERT INTO `student_account` (`std_id`, `std_password`, `std_name`, `std_image`, `std_sem`, `std_accadmic`, `department_id`, `branch_id`, `std_status`) VALUES
-(1001, '123456', 'Himanshu Srivastava', '1001.jpg', 4, '2020-2022', 18, 2, 2),
-(1002, '123456', 'Saurabh Srivastava', '1002.jpg', 4, '2020-2022', 18, 2, 2),
-(1003, '123456', 'Aayushi Tyagi', '1003.jpg', 4, '2020-2022', 18, 2, 3),
-(1004, '123456', 'Ritik Raj', '1004.jpg', 4, '2020-2022', 18, 2, 1),
-(1005, '123456', 'Mayank Srivastava', '1005.jpg', 4, '2020-2022', 18, 2, 1),
-(1006, '123456', 'Jeevash', '1006.jpg', 4, '2020-2022', 18, 2, 3),
-(1007, '123456', 'Manish Mishra', '1007.jpg', 4, '2020-2022', 18, 2, 2),
-(1008, '123456', 'Komal Chaudhary', '1008.jpg', 4, '2020-2022', 18, 2, 2);
+INSERT INTO `student_account` (`std_id`, `std_name`, `std_password`, `std_image`, `std_sem`, `std_accadmic`, `department_id`, `branch_id`, `std_status`) VALUES
+(1001, 'Himanshu Srivastava', '123456', '1001.jpg', 4, '2020-2022', 18, 2, 2),
+(1002, 'Saurabh Srivastava', '123456', '1002.jpg', 4, '2020-2022', 18, 2, 2),
+(1003, 'Aayushi Tyagi', '123456', '1003.jpg', 4, '2020-2022', 18, 2, 3),
+(1004, 'Ritik Raj', '123456', '1004.jpg', 4, '2020-2022', 18, 2, 1),
+(1005, 'Mayank Srivastava', '123456', '1005.jpg', 4, '2020-2022', 18, 2, 1),
+(1006, 'Jeevash', '123456', '1006.jpg', 4, '2020-2022', 18, 2, 3),
+(1007, 'Manish Mishra', '123456', '1007.jpg', 4, '2020-2022', 18, 2, 2),
+(1008, 'Komal Chaudhary', '123456', '1008.jpg', 4, '2020-2022', 18, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -248,8 +264,10 @@ INSERT INTO `student_account` (`std_id`, `std_password`, `std_name`, `std_image`
 --
 
 CREATE TABLE `student_attendance` (
-  `sr_no` int(10) NOT NULL COMMENT 'fagd',
-  `std_id` int(11) NOT NULL
+  `std_id` int(11) NOT NULL,
+  `subject_code` varchar(10) NOT NULL,
+  `att_date` varchar(10) NOT NULL,
+  `att_status` int(1) NOT NULL COMMENT '0-Absent 1-Present 3-Late 4-Other'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -280,6 +298,42 @@ INSERT INTO `student_bio` (`std_id`, `std_father`, `std_mother`, `std_dob`, `std
 (1007, 'SANTOSH KUMAR MISHRA', 'RITA MISHRA', '29-02-1998', 'VARANASI', 'VARANASI', '221103', '1234567890', 'manishmishra@stportal.com'),
 (1008, 'JEETINDRA SINGH', 'ASHA CHAUDHARY', '30-06-1998', 'MEERUT', 'MEERUT', '250001', '9934567890', 'komal@stportal.com');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subject_details`
+--
+
+CREATE TABLE `subject_details` (
+  `subject_code` varchar(10) NOT NULL,
+  `subject_name` varchar(60) NOT NULL,
+  `branch_id` int(10) NOT NULL,
+  `std_sem` int(2) NOT NULL,
+  `faculty_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `subject_details`
+--
+
+INSERT INTO `subject_details` (`subject_code`, `subject_name`, `branch_id`, `std_sem`, `faculty_id`) VALUES
+('MCA - 401', 'PSOSM - Privacy and security Of Social Media', 2, 4, 4001),
+('MCA - 402', 'IOT - Internet of things', 2, 4, 4004);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `table_feedback`
+--
+
+CREATE TABLE `table_feedback` (
+  `feedback_id` int(10) NOT NULL,
+  `feedback_message` varchar(500) NOT NULL,
+  `feedback_date` varchar(10) NOT NULL,
+  `feedback_time` varchar(10) NOT NULL,
+  `std_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Indexes for dumped tables
 --
@@ -288,13 +342,17 @@ INSERT INTO `student_bio` (`std_id`, `std_father`, `std_mother`, `std_dob`, `std
 -- Indexes for table `assignment_info`
 --
 ALTER TABLE `assignment_info`
-  ADD PRIMARY KEY (`assi_id`);
+  ADD PRIMARY KEY (`assi_id`),
+  ADD KEY `assignment_branch_id` (`branch_id`),
+  ADD KEY `assignment_faculty_id` (`faculty_id`),
+  ADD KEY `assignment_subject_code` (`subject_code`);
 
 --
 -- Indexes for table `branch_info`
 --
 ALTER TABLE `branch_info`
-  ADD PRIMARY KEY (`branch_id`);
+  ADD PRIMARY KEY (`branch_id`),
+  ADD KEY `branch_department_id` (`dapartment_id`);
 
 --
 -- Indexes for table `college_contact`
@@ -324,25 +382,43 @@ ALTER TABLE `department_info`
 -- Indexes for table `faculty_info`
 --
 ALTER TABLE `faculty_info`
-  ADD PRIMARY KEY (`faculty_id`);
+  ADD PRIMARY KEY (`faculty_id`),
+  ADD KEY `faculty_department_id` (`department_id`);
 
 --
 -- Indexes for table `student_account`
 --
 ALTER TABLE `student_account`
-  ADD PRIMARY KEY (`std_id`);
+  ADD PRIMARY KEY (`std_id`),
+  ADD KEY `student_branch_id` (`branch_id`),
+  ADD KEY `student_department_id` (`department_id`);
 
 --
 -- Indexes for table `student_attendance`
 --
 ALTER TABLE `student_attendance`
-  ADD PRIMARY KEY (`sr_no`);
+  ADD KEY `attandance_student_id` (`std_id`),
+  ADD KEY `attandance_subject_code` (`subject_code`);
 
 --
 -- Indexes for table `student_bio`
 --
 ALTER TABLE `student_bio`
-  ADD PRIMARY KEY (`std_id`);
+  ADD UNIQUE KEY `std_id` (`std_id`);
+
+--
+-- Indexes for table `subject_details`
+--
+ALTER TABLE `subject_details`
+  ADD PRIMARY KEY (`subject_code`),
+  ADD KEY `subject_branch_id` (`branch_id`);
+
+--
+-- Indexes for table `table_feedback`
+--
+ALTER TABLE `table_feedback`
+  ADD PRIMARY KEY (`feedback_id`),
+  ADD KEY `std_id` (`std_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -376,7 +452,7 @@ ALTER TABLE `college_events`
 -- AUTO_INCREMENT for table `college_gallery`
 --
 ALTER TABLE `college_gallery`
-  MODIFY `sr_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `sr_no` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `department_info`
@@ -397,10 +473,66 @@ ALTER TABLE `student_account`
   MODIFY `std_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1009;
 
 --
--- AUTO_INCREMENT for table `student_attendance`
+-- AUTO_INCREMENT for table `table_feedback`
+--
+ALTER TABLE `table_feedback`
+  MODIFY `feedback_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `assignment_info`
+--
+ALTER TABLE `assignment_info`
+  ADD CONSTRAINT `assignment_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch_info` (`branch_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `assignment_faculty_id` FOREIGN KEY (`faculty_id`) REFERENCES `faculty_info` (`faculty_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `assignment_subject_code` FOREIGN KEY (`subject_code`) REFERENCES `subject_details` (`subject_code`) ON DELETE NO ACTION ON UPDATE CASCADE;
+
+--
+-- Constraints for table `branch_info`
+--
+ALTER TABLE `branch_info`
+  ADD CONSTRAINT `branch_department_id` FOREIGN KEY (`dapartment_id`) REFERENCES `department_info` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `faculty_info`
+--
+ALTER TABLE `faculty_info`
+  ADD CONSTRAINT `faculty_department_id` FOREIGN KEY (`department_id`) REFERENCES `department_info` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `student_account`
+--
+ALTER TABLE `student_account`
+  ADD CONSTRAINT `student_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch_info` (`branch_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `student_department_id` FOREIGN KEY (`department_id`) REFERENCES `department_info` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `student_attendance`
 --
 ALTER TABLE `student_attendance`
-  MODIFY `sr_no` int(10) NOT NULL AUTO_INCREMENT COMMENT 'fagd';
+  ADD CONSTRAINT `attandance_student_id` FOREIGN KEY (`std_id`) REFERENCES `student_account` (`std_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `attandance_subject_code` FOREIGN KEY (`subject_code`) REFERENCES `subject_details` (`subject_code`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `student_bio`
+--
+ALTER TABLE `student_bio`
+  ADD CONSTRAINT `student_bio_account_std_id` FOREIGN KEY (`std_id`) REFERENCES `student_account` (`std_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `subject_details`
+--
+ALTER TABLE `subject_details`
+  ADD CONSTRAINT `subject_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch_info` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `table_feedback`
+--
+ALTER TABLE `table_feedback`
+  ADD CONSTRAINT `table_feedback_student_account_id` FOREIGN KEY (`std_id`) REFERENCES `student_account` (`std_id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
