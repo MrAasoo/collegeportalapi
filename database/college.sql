@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2022 at 06:15 PM
+-- Generation Time: Jun 08, 2022 at 12:14 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -31,9 +31,10 @@ SET time_zone = "+00:00";
 CREATE TABLE `assignment_info` (
   `assi_id` int(10) NOT NULL,
   `assi_title` varchar(45) NOT NULL,
-  `assi_date` varchar(45) NOT NULL,
-  `assi_details` varchar(200) NOT NULL COMMENT 'MAX 200 char',
+  `assi_date` date NOT NULL,
+  `assi_details` varchar(5000) NOT NULL COMMENT 'MAX 5000',
   `branch_id` int(10) NOT NULL,
+  `std_sem` int(2) NOT NULL,
   `subject_code` varchar(10) NOT NULL,
   `faculty_id` int(10) NOT NULL,
   `assi_due_date` varchar(45) NOT NULL
@@ -43,9 +44,10 @@ CREATE TABLE `assignment_info` (
 -- Dumping data for table `assignment_info`
 --
 
-INSERT INTO `assignment_info` (`assi_id`, `assi_title`, `assi_date`, `assi_details`, `branch_id`, `subject_code`, `faculty_id`, `assi_due_date`) VALUES
-(1, 'Assignment 1', '26-12-2021', 'Assignment details should be written here.', 2, 'MCA - 401', 4001, '10-01-2022'),
-(2, 'Assignment on ABC', '10-1-2022', 'Here show assignment details for the following.', 2, 'MCA - 402', 4004, '16-01-2022');
+INSERT INTO `assignment_info` (`assi_id`, `assi_title`, `assi_date`, `assi_details`, `branch_id`, `std_sem`, `subject_code`, `faculty_id`, `assi_due_date`) VALUES
+(1, 'Assignment 1', '2021-12-26', 'Assignment details should be written here.', 2, 4, 'MCA-401', 4001, '10-01-2022'),
+(2, 'Assignment on ABC', '2022-01-05', 'Here show assignment details for the following.', 2, 1, 'MCA-402', 4004, '16-01-2022'),
+(3, 'Assignment Example', '2022-05-29', 'Here show assignment details for the following. This is only for test.', 2, 4, 'MCA-401', 4002, '16-01-2022');
 
 -- --------------------------------------------------------
 
@@ -71,16 +73,135 @@ INSERT INTO `branch_info` (`branch_id`, `branch_name`, `dapartment_id`, `branch_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `chat_group_members`
+--
+
+CREATE TABLE `chat_group_members` (
+  `group_id` int(10) NOT NULL,
+  `std_id` int(10) DEFAULT NULL,
+  `faculty_id` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chat_group_message`
+--
+
+CREATE TABLE `chat_group_message` (
+  `message_id` int(10) NOT NULL,
+  `group_id` int(10) NOT NULL,
+  `student_id` int(10) DEFAULT NULL,
+  `faculty_id` int(10) DEFAULT NULL,
+  `message_text` varchar(5000) NOT NULL,
+  `message_date` date NOT NULL,
+  `message_time` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `club_events`
+--
+
+CREATE TABLE `club_events` (
+  `event_id` int(10) NOT NULL,
+  `club_id` int(10) NOT NULL,
+  `event_post_date` date NOT NULL,
+  `event_date` date NOT NULL,
+  `event_image_path` varchar(50) NOT NULL,
+  `event_motive` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `club_list`
+--
+
+CREATE TABLE `club_list` (
+  `club_id` int(10) NOT NULL,
+  `club_name` varchar(50) NOT NULL,
+  `club_motive` varchar(500) NOT NULL,
+  `club_logo` varchar(50) DEFAULT NULL,
+  `club_background_image` varchar(50) DEFAULT NULL,
+  `club_start_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `club_list`
+--
+
+INSERT INTO `club_list` (`club_id`, `club_name`, `club_motive`, `club_logo`, `club_background_image`, `club_start_date`) VALUES
+(1, 'Media and Publication Clubs', 'Many businesses are realizing the need for digitally literate teams, and this is where joining media and publications clubs can pay off. You can be tasked with publishing the student newspaper, running the school’s website, or producing other forms of content, such as photographs and news releases.', 'club_logo_1.jpg', 'club_bg_1.jpg', '2021-12-22'),
+(2, 'Community Service Clubs', 'No matter what industry you’re going into after graduating, spending time with clubs that give back to the community can help you impress potential bosses. Whether you focus on teaching children or building houses for the homeless, your selflessness and desire to create a difference.', 'club_logo_2.jpg', 'club_bg_2.jpg', '2022-02-08'),
+(3, 'Books Clubs', 'Looking for a book club? Explore dozens of online book clubs or find a book club near you. Say hello to a better book club experience. Rate each book you read. Manage your club. All books in one place. Get inspired.', NULL, NULL, '2021-12-01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `club_members`
+--
+
+CREATE TABLE `club_members` (
+  `sr_no` int(11) NOT NULL,
+  `club_id` int(10) NOT NULL,
+  `std_id` int(10) NOT NULL,
+  `join_date` date NOT NULL,
+  `member_status` int(1) NOT NULL COMMENT '1-Yes 2-No 3-Blocked',
+  `member_type` int(1) NOT NULL COMMENT '1-Admin 2-Member'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `club_members`
+--
+
+INSERT INTO `club_members` (`sr_no`, `club_id`, `std_id`, `join_date`, `member_status`, `member_type`) VALUES
+(1, 2, 1001, '2022-05-18', 1, 1),
+(2, 2, 1008, '2022-05-19', 1, 2),
+(3, 1, 1001, '2022-05-17', 2, 2),
+(4, 1, 1008, '2022-05-10', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `college_blog`
+--
+
+CREATE TABLE `college_blog` (
+  `blog_id` int(10) NOT NULL,
+  `blog_title` varchar(100) NOT NULL,
+  `blog_text` varchar(5000) NOT NULL,
+  `blog_date` varchar(10) NOT NULL,
+  `std_id` int(10) DEFAULT NULL,
+  `faculty_id` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `college_chat_group`
+--
+
+CREATE TABLE `college_chat_group` (
+  `group_id` int(11) NOT NULL,
+  `group_name` varchar(100) NOT NULL,
+  `group_motive` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `college_contact`
 --
 
 CREATE TABLE `college_contact` (
   `contact_sr_no` int(11) NOT NULL,
-  `contact_designation` varchar(45) NOT NULL,
+  `contact_designation` varchar(45) DEFAULT NULL,
   `contact_name` varchar(40) NOT NULL,
-  `contact_number` varchar(40) NOT NULL,
-  `contact_link` varchar(100) NOT NULL,
-  `contact_email` varchar(40) NOT NULL
+  `contact_number` varchar(40) DEFAULT NULL,
+  `contact_link` varchar(100) DEFAULT NULL,
+  `contact_email` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -104,7 +225,7 @@ CREATE TABLE `college_events` (
   `n_title` varchar(100) NOT NULL COMMENT 'MAX 100',
   `n_subtitle` varchar(200) NOT NULL COMMENT 'MAX 200',
   `n_detail` varchar(1000) NOT NULL COMMENT 'MAX 1000',
-  `n_image` varchar(45) NOT NULL,
+  `n_image` varchar(45) DEFAULT NULL,
   `n_type` int(1) NOT NULL COMMENT '0 - News 1 - Notice 2 - Event',
   `n_slider` int(1) NOT NULL COMMENT '0 - No 1 - Yes'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -134,7 +255,7 @@ CREATE TABLE `college_gallery` (
   `media_description` varchar(1000) NOT NULL,
   `media_added` varchar(10) NOT NULL,
   `media_path` varchar(40) NOT NULL,
-  `media_path_video` varchar(100) NOT NULL
+  `media_path_video` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -210,7 +331,7 @@ INSERT INTO `department_info` (`department_id`, `department_name`) VALUES
 CREATE TABLE `faculty_info` (
   `faculty_id` int(10) NOT NULL,
   `faculty_name` varchar(45) NOT NULL,
-  `department_id` int(10) NOT NULL,
+  `department_id` int(10) DEFAULT NULL,
   `faculty_mail` varchar(45) NOT NULL,
   `faculty_contact` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -249,12 +370,12 @@ CREATE TABLE `student_account` (
 
 INSERT INTO `student_account` (`std_id`, `std_name`, `std_password`, `std_image`, `std_sem`, `std_accadmic`, `department_id`, `branch_id`, `std_status`) VALUES
 (1001, 'Himanshu Srivastava', '123456', '1001.jpg', 4, '2020-2022', 18, 2, 2),
-(1002, 'Saurabh Srivastava', '123456', '1002.jpg', 4, '2020-2022', 18, 2, 2),
+(1002, 'Saurabh Srivastava', '123456', '1002.jpg', 1, '2020-2022', 18, 2, 2),
 (1003, 'Aayushi Tyagi', '123456', '1003.jpg', 4, '2020-2022', 18, 2, 3),
 (1004, 'Ritik Raj', '123456', '1004.jpg', 4, '2020-2022', 18, 2, 1),
-(1005, 'Mayank Srivastava', '123456', '1005.jpg', 4, '2020-2022', 18, 2, 1),
+(1005, 'Mayank Srivastava', '123456', '1005.jpg', 2, '2020-2022', 18, 2, 1),
 (1006, 'Jeevash', '123456', '1006.jpg', 4, '2020-2022', 18, 2, 3),
-(1007, 'Manish Mishra', '123456', '1007.jpg', 4, '2020-2022', 18, 2, 2),
+(1007, 'Manish Mishra', '123456', '1007.jpg', 3, '2020-2022', 18, 2, 2),
 (1008, 'Komal Chaudhary', '123456', '1008.jpg', 4, '2020-2022', 18, 2, 2);
 
 -- --------------------------------------------------------
@@ -309,7 +430,7 @@ CREATE TABLE `subject_details` (
   `subject_name` varchar(60) NOT NULL,
   `branch_id` int(10) NOT NULL,
   `std_sem` int(2) NOT NULL,
-  `faculty_id` int(10) NOT NULL
+  `faculty_id` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -317,8 +438,25 @@ CREATE TABLE `subject_details` (
 --
 
 INSERT INTO `subject_details` (`subject_code`, `subject_name`, `branch_id`, `std_sem`, `faculty_id`) VALUES
-('MCA - 401', 'PSOSM - Privacy and security Of Social Media', 2, 4, 4001),
-('MCA - 402', 'IOT - Internet of things', 2, 4, 4004);
+('MCA-101', 'Fundamental of Computers & Emerging Technologies', 2, 1, NULL),
+('MCA-102', 'Principles of Programming using C', 2, 1, NULL),
+('MCA-103', 'Principles of Managemnt & Communication', 2, 1, NULL),
+('MCA-104', 'Discrete Mathematics', 2, 1, NULL),
+('MCA-105', 'Computer Organization & Architecture', 2, 1, NULL),
+('MCA-151', 'Principles of Programming Using C Lab', 2, 1, NULL),
+('MCA-152', 'Computer Organization & Architecture Lab', 2, 1, NULL),
+('MCA-153', 'Professional Communication Lab', 2, 1, NULL),
+('MCA-201', 'Theory of Automata & Formal Language', 2, 2, NULL),
+('MCA-202', 'Object Orineted Programming', 2, 2, NULL),
+('MCA-203', 'Operating Systems', 2, 2, NULL),
+('MCA-204', 'Database Management Systems', 2, 2, NULL),
+('MCA-205', 'Data Structures & Analysis of Algorithms', 2, 2, NULL),
+('MCA-206', 'Cyber Security - Qualifying Non-credit Course', 2, 2, NULL),
+('MCA-251', 'Object Orineted Programming Lab', 2, 2, NULL),
+('MCA-252', 'Database Management Systems Lab', 2, 2, NULL),
+('MCA-253', 'Data Structures & Analysis of Algorithms Lab', 2, 2, NULL),
+('MCA-401', 'Privacy and security Of Social Media', 2, 4, 4001),
+('MCA-402', 'Internet of things', 2, 4, 4004);
 
 -- --------------------------------------------------------
 
@@ -329,10 +467,19 @@ INSERT INTO `subject_details` (`subject_code`, `subject_name`, `branch_id`, `std
 CREATE TABLE `table_feedback` (
   `feedback_id` int(10) NOT NULL,
   `feedback_message` varchar(500) NOT NULL,
-  `feedback_date` varchar(10) NOT NULL,
-  `feedback_time` varchar(10) NOT NULL,
+  `feedback_date` date NOT NULL,
+  `feedback_time` time NOT NULL,
   `std_id` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `table_feedback`
+--
+
+INSERT INTO `table_feedback` (`feedback_id`, `feedback_message`, `feedback_date`, `feedback_time`, `std_id`) VALUES
+(1, 'TEST : This is feedback message', '2022-05-27', '00:05:46', 1001),
+(2, 'Change night mode colours', '2022-05-27', '01:39:55', 1007),
+(3, 'Fix night mode text in settings', '2022-05-27', '12:51:00', 1001);
 
 --
 -- Indexes for dumped tables
@@ -353,6 +500,55 @@ ALTER TABLE `assignment_info`
 ALTER TABLE `branch_info`
   ADD PRIMARY KEY (`branch_id`),
   ADD KEY `branch_department_id` (`dapartment_id`);
+
+--
+-- Indexes for table `chat_group_members`
+--
+ALTER TABLE `chat_group_members`
+  ADD KEY `chat_group_id` (`group_id`),
+  ADD KEY `chat_student_id` (`std_id`),
+  ADD KEY `chat_faculty_id` (`faculty_id`);
+
+--
+-- Indexes for table `chat_group_message`
+--
+ALTER TABLE `chat_group_message`
+  ADD PRIMARY KEY (`message_id`);
+
+--
+-- Indexes for table `club_events`
+--
+ALTER TABLE `club_events`
+  ADD PRIMARY KEY (`event_id`),
+  ADD KEY `event_club_id` (`club_id`);
+
+--
+-- Indexes for table `club_list`
+--
+ALTER TABLE `club_list`
+  ADD PRIMARY KEY (`club_id`);
+
+--
+-- Indexes for table `club_members`
+--
+ALTER TABLE `club_members`
+  ADD PRIMARY KEY (`sr_no`),
+  ADD KEY `member_club_id` (`club_id`),
+  ADD KEY `member_student_id` (`std_id`);
+
+--
+-- Indexes for table `college_blog`
+--
+ALTER TABLE `college_blog`
+  ADD PRIMARY KEY (`blog_id`),
+  ADD KEY `blog_student_id` (`std_id`),
+  ADD KEY `blog_faculty_id` (`faculty_id`);
+
+--
+-- Indexes for table `college_chat_group`
+--
+ALTER TABLE `college_chat_group`
+  ADD PRIMARY KEY (`group_id`);
 
 --
 -- Indexes for table `college_contact`
@@ -411,7 +607,8 @@ ALTER TABLE `student_bio`
 --
 ALTER TABLE `subject_details`
   ADD PRIMARY KEY (`subject_code`),
-  ADD KEY `subject_branch_id` (`branch_id`);
+  ADD KEY `subject_branch_id` (`branch_id`),
+  ADD KEY `subject_faculty_id` (`faculty_id`);
 
 --
 -- Indexes for table `table_feedback`
@@ -428,13 +625,49 @@ ALTER TABLE `table_feedback`
 -- AUTO_INCREMENT for table `assignment_info`
 --
 ALTER TABLE `assignment_info`
-  MODIFY `assi_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `assi_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `branch_info`
 --
 ALTER TABLE `branch_info`
   MODIFY `branch_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `chat_group_message`
+--
+ALTER TABLE `chat_group_message`
+  MODIFY `message_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `club_events`
+--
+ALTER TABLE `club_events`
+  MODIFY `event_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `club_list`
+--
+ALTER TABLE `club_list`
+  MODIFY `club_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `club_members`
+--
+ALTER TABLE `club_members`
+  MODIFY `sr_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `college_blog`
+--
+ALTER TABLE `college_blog`
+  MODIFY `blog_id` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `college_chat_group`
+--
+ALTER TABLE `college_chat_group`
+  MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `college_contact`
@@ -476,7 +709,7 @@ ALTER TABLE `student_account`
 -- AUTO_INCREMENT for table `table_feedback`
 --
 ALTER TABLE `table_feedback`
-  MODIFY `feedback_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `feedback_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -495,6 +728,34 @@ ALTER TABLE `assignment_info`
 --
 ALTER TABLE `branch_info`
   ADD CONSTRAINT `branch_department_id` FOREIGN KEY (`dapartment_id`) REFERENCES `department_info` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `chat_group_members`
+--
+ALTER TABLE `chat_group_members`
+  ADD CONSTRAINT `chat_faculty_id` FOREIGN KEY (`faculty_id`) REFERENCES `faculty_info` (`faculty_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `chat_group_id` FOREIGN KEY (`group_id`) REFERENCES `college_chat_group` (`group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `chat_student_id` FOREIGN KEY (`std_id`) REFERENCES `student_account` (`std_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `club_events`
+--
+ALTER TABLE `club_events`
+  ADD CONSTRAINT `event_club_id` FOREIGN KEY (`club_id`) REFERENCES `club_list` (`club_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `club_members`
+--
+ALTER TABLE `club_members`
+  ADD CONSTRAINT `member_club_id` FOREIGN KEY (`club_id`) REFERENCES `club_list` (`club_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `member_student_id` FOREIGN KEY (`std_id`) REFERENCES `student_account` (`std_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `college_blog`
+--
+ALTER TABLE `college_blog`
+  ADD CONSTRAINT `blog_faculty_id` FOREIGN KEY (`faculty_id`) REFERENCES `faculty_info` (`faculty_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `blog_student_id` FOREIGN KEY (`std_id`) REFERENCES `student_account` (`std_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `faculty_info`
@@ -526,7 +787,8 @@ ALTER TABLE `student_bio`
 -- Constraints for table `subject_details`
 --
 ALTER TABLE `subject_details`
-  ADD CONSTRAINT `subject_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch_info` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `subject_branch_id` FOREIGN KEY (`branch_id`) REFERENCES `branch_info` (`branch_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `subject_faculty_id` FOREIGN KEY (`faculty_id`) REFERENCES `faculty_info` (`faculty_id`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `table_feedback`

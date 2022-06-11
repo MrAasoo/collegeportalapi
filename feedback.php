@@ -18,9 +18,11 @@ $time = date("H:i:s");
 
 $sql_check = "select * from student_account where std_id = '$std_id' and std_password = '$std_password'";
 $result = mysqli_query($db_con, $sql_check);
+
 if(mysqli_num_rows($result) == 1){
 	$sql_insert ="INSERT INTO `table_feedback`(`feedback_message`, `feedback_date`, `feedback_time`, `std_id`) 
 					VALUES ('$feedback_message','$date', '$time','$std_id');";
+	
 	if(mysqli_query($db_con, $sql_insert)){
 		$message = FEEDBACK_SUBMITTED;
 		$status = true;
