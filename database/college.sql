@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 08, 2022 at 12:14 PM
+-- Generation Time: Jun 12, 2022 at 06:45 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.10
 
@@ -37,17 +37,18 @@ CREATE TABLE `assignment_info` (
   `std_sem` int(2) NOT NULL,
   `subject_code` varchar(10) NOT NULL,
   `faculty_id` int(10) NOT NULL,
-  `assi_due_date` varchar(45) NOT NULL
+  `assi_due_date` varchar(45) NOT NULL,
+  `assi_path` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `assignment_info`
 --
 
-INSERT INTO `assignment_info` (`assi_id`, `assi_title`, `assi_date`, `assi_details`, `branch_id`, `std_sem`, `subject_code`, `faculty_id`, `assi_due_date`) VALUES
-(1, 'Assignment 1', '2021-12-26', 'Assignment details should be written here.', 2, 4, 'MCA-401', 4001, '10-01-2022'),
-(2, 'Assignment on ABC', '2022-01-05', 'Here show assignment details for the following.', 2, 1, 'MCA-402', 4004, '16-01-2022'),
-(3, 'Assignment Example', '2022-05-29', 'Here show assignment details for the following. This is only for test.', 2, 4, 'MCA-401', 4002, '16-01-2022');
+INSERT INTO `assignment_info` (`assi_id`, `assi_title`, `assi_date`, `assi_details`, `branch_id`, `std_sem`, `subject_code`, `faculty_id`, `assi_due_date`, `assi_path`) VALUES
+(1, 'Assignment 1', '2021-12-26', 'Assignment details should be written here.', 2, 4, 'MCA-401', 4001, '10-01-2022', NULL),
+(2, 'Assignment on ABC', '2022-01-05', 'Here show assignment details for the following.', 2, 4, 'MCA-402', 4004, '16-01-2022', 'Assignment_2.pdf'),
+(3, 'Assignment Example', '2022-05-29', 'Here show assignment details for the following. This is only for test.', 2, 4, 'MCA-401', 4002, '16-01-2022', 'Assignment_3.pdf');
 
 -- --------------------------------------------------------
 
@@ -69,6 +70,29 @@ CREATE TABLE `branch_info` (
 INSERT INTO `branch_info` (`branch_id`, `branch_name`, `dapartment_id`, `branch_full_name`) VALUES
 (1, 'BCA', 18, 'Batchlors of Computer Application'),
 (2, 'MCA', 18, 'Master of Computer Application');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `campus_map`
+--
+
+CREATE TABLE `campus_map` (
+  `sr_no` int(10) NOT NULL,
+  `location_name` varchar(100) NOT NULL,
+  `location_latitude` varchar(20) NOT NULL,
+  `location_longitude` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `campus_map`
+--
+
+INSERT INTO `campus_map` (`sr_no`, `location_name`, `location_latitude`, `location_longitude`) VALUES
+(1, 'CCS University Main Gate', '28.9669793', '77.7388880'),
+(2, 'Netaji Subhash Chandra Bose Bhawan, CCSU', '28.9678018', '77.7389775'),
+(3, 'SCRIET Main Gate', '28.9753310', '77.7329097'),
+(4, 'SCRIET Administration Department', '28.9763107', '77.7334766');
 
 -- --------------------------------------------------------
 
@@ -158,9 +182,12 @@ CREATE TABLE `club_members` (
 
 INSERT INTO `club_members` (`sr_no`, `club_id`, `std_id`, `join_date`, `member_status`, `member_type`) VALUES
 (1, 2, 1001, '2022-05-18', 1, 1),
-(2, 2, 1008, '2022-05-19', 1, 2),
-(3, 1, 1001, '2022-05-17', 2, 2),
-(4, 1, 1008, '2022-05-10', 1, 1);
+(2, 2, 1008, '2022-05-19', 3, 2),
+(4, 1, 1008, '2022-05-10', 1, 1),
+(5, 3, 1002, '2022-05-18', 2, 2),
+(6, 3, 1003, '2022-05-18', 1, 2),
+(7, 2, 1007, '2022-05-19', 1, 2),
+(9, 3, 1001, '2022-06-11', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -502,6 +529,12 @@ ALTER TABLE `branch_info`
   ADD KEY `branch_department_id` (`dapartment_id`);
 
 --
+-- Indexes for table `campus_map`
+--
+ALTER TABLE `campus_map`
+  ADD PRIMARY KEY (`sr_no`);
+
+--
 -- Indexes for table `chat_group_members`
 --
 ALTER TABLE `chat_group_members`
@@ -634,6 +667,12 @@ ALTER TABLE `branch_info`
   MODIFY `branch_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `campus_map`
+--
+ALTER TABLE `campus_map`
+  MODIFY `sr_no` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `chat_group_message`
 --
 ALTER TABLE `chat_group_message`
@@ -655,7 +694,7 @@ ALTER TABLE `club_list`
 -- AUTO_INCREMENT for table `club_members`
 --
 ALTER TABLE `club_members`
-  MODIFY `sr_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `sr_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `college_blog`

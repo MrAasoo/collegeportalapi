@@ -29,7 +29,7 @@
            echo json_encode(array("status" => false)); 
         }
     } else {
-        $sql = "SELECT assignment_info.assi_title, assignment_info.assi_date, assignment_info.assi_details, assignment_info.assi_due_date, faculty_info.faculty_name 
+        $sql = "SELECT assignment_info.assi_title, assignment_info.assi_date, assignment_info.assi_details, assignment_info.assi_due_date, assignment_info.assi_path, faculty_info.faculty_name 
                 FROM assignment_info LEFT JOIN faculty_info 
                 ON assignment_info.faculty_id = faculty_info.faculty_id 
                 WHERE assignment_info.assi_id = '$assi_id';";

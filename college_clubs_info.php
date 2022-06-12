@@ -50,5 +50,7 @@ define('GET_STUDENT_CLUB_STATUS', "3");
     } else {
         echo json_encode(array("status" => false)); 
     }
-
+    
+    //close the db connection
+    mysqli_close($db_con);
 ?>

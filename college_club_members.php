@@ -74,5 +74,7 @@ define('UNBLOCK_MEMBER', 2070);
         }
     }
 
-
+    
+    //close the db connection
+    mysqli_close($db_con);
 ?>

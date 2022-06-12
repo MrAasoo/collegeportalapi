@@ -26,4 +26,8 @@
     } else {
         echo json_encode(array("status" => false));
     }
+
+        
+    //close the db connection
+    mysqli_close($db_con);
 ?>
