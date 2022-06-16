@@ -19,11 +19,9 @@ define('GET_STUDENT_CLUB_STATUS', "3");
     } else if($req == IS_STUDENT_CLUB_MEMBER){
         $sql = "SELECT * FROM club_members WHERE club_id = '$club_id' AND std_id = '$std_id';";
     } else if($req == GET_STUDENT_CLUB_STATUS)  {
-        $sql = "SELECT CM.club_id, CM.join_date, CM.member_status, CM.member_type, CL.club_name, CL.club_motive, CL.club_start_date, CL.club_logo, CL.club_background_image
-        FROM club_members AS CM
-        LEFT JOIN club_list AS CL
-        ON  CM.club_id = CL.club_id 
-        WHERE CM.std_id = '$std_id' AND CM.club_id = '$club_id' ;";    
+        $sql = "SELECT join_date, member_status, member_type
+        FROM club_members 
+        WHERE std_id = '$std_id' AND club_id = '$club_id';";    
     } 
 
 

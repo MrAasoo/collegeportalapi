@@ -3,20 +3,22 @@
 
     require "db_connection.php";
 
-    $nId = $_GET["n_id"];
-    $nSlider = $_GET["n_slider"];
+    $eventId = $_GET["event_id"];
+    $eventType = $_GET["event_type"];
+    $clubId = $_GET["club_id"];
 
     //fetch table rows from mysql db
-    if($nId != 0){
-        $sql = "SELECT * 
-                FROM college_events 
-                WHERE n_id = '$nId';";
+    if($eventId != 0){
+        $sql = "SELECT event_id, event_type, event_topic, event_motive, event_post_date, event_date, event_image_path
+                FROM club_events 
+                WHERE event_id = '$eventId' AND club_id = '$clubId';";
         $result = mysqli_query($db_con, $sql) or die("Error in Selecting " . mysqli_error($db_con));
+
 
         if(mysqli_num_rows($result) == 1){
             //create an array
             $emparray = array();
-            $row =mysqli_fetch_assoc($result);    
+            $row = mysqli_fetch_assoc($result);
             $emparray[] = $row;
             echo json_encode(array("status" => true, "data" => $emparray));
         }
@@ -24,10 +26,10 @@
             echo json_encode(array("status" => false));
         }
     } else {
-        $sql = "SELECT * 
-                FROM college_events 
-                WHERE n_slider = '$nSlider' 
-                ORDER BY n_id DESC";
+        $sql = "SELECT event_id, club_id, event_topic, event_motive, event_post_date
+                FROM club_events 
+                WHERE club_id = '$clubId' AND event_type = '$eventType'
+                ORDER BY club_id DESC";
         $result = mysqli_query($db_con, $sql) or die("Error in Selecting " . mysqli_error($db_con));
 
         if(mysqli_num_rows($result) > 0){
