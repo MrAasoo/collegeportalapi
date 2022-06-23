@@ -38,7 +38,7 @@ define('UNBLOCK_MEMBER', 2070);
             break;
 
         case CLUB_MEMBER_LIST_ADMIN:
-            $sql = "SELECT club_members.sr_no, club_members.member_status, club_members.member_type, club_members.join_date, student_account.std_name, student_account.std_image, branch_info.branch_name 
+            $sql = "SELECT club_members.sr_no, club_members.member_status, club_members.member_type, club_members.join_date, club_members.std_id, student_account.std_name, student_account.std_image, branch_info.branch_name 
                     FROM club_members 
                     LEFT JOIN student_account 
                     ON club_members.std_id = student_account.std_id 
@@ -103,6 +103,7 @@ define('UNBLOCK_MEMBER', 2070);
         } else {
             echo json_encode(array("status" => false)); 
         }
+
     } else {
         if(mysqli_query($db_con, $sql)){
             echo json_encode(array("status" => true, "result" => $req));
