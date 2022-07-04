@@ -9,12 +9,4 @@ $db_name = "id18957964_college";
 
 
 $db_con = mysqli_connect($host, $user_name, $user_password, $db_name);
-/*
-// Check database connection
-if($db_con){
-    die("Connection Successful!");
-} else {
-    die("Connection Failed!");
-}
-*/
 ?>
